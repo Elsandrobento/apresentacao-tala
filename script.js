@@ -20,6 +20,8 @@ class PresentationApp {
     this.fullscreenBtn = document.getElementById('btn-fullscreen');
     this.gridBtn = document.getElementById('btn-grid');
     this.soundBtn = document.getElementById('btn-sound');
+    this.themeBtn = document.getElementById('btn-theme');
+    this.theme = localStorage.getItem('presentation_theme') || 'light';
 
     // Modais & Lightbox
     this.lightboxModal = document.getElementById('lightbox-modal');
@@ -34,6 +36,7 @@ class PresentationApp {
   }
 
   init() {
+    this.applyTheme(this.theme);
     this.setupAudio();
     this.setupEventListeners();
     this.buildGridThumbnails();
@@ -136,6 +139,10 @@ class PresentationApp {
         case 'Escape':
           this.closeAllModals();
           break;
+        case 't':
+        case 'T':
+          this.toggleTheme();
+          break;
       }
     });
 
@@ -146,7 +153,9 @@ class PresentationApp {
     this.gridBtn?.addEventListener('click', () => this.toggleGrid());
     this.gridClose?.addEventListener('click', () => this.gridModal.classList.remove('active'));
 
-    // Som
+    // Som & Tema
+    this.themeBtn?.addEventListener('click', () => this.toggleTheme());
+
     this.soundBtn?.addEventListener('click', () => {
       this.isMuted = !this.isMuted;
       this.soundBtn.innerHTML = this.isMuted ? '🔇' : '🔊';
@@ -315,6 +324,29 @@ class PresentationApp {
         }
       });
     });
+  }
+
+  toggleTheme() {
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem('presentation_theme', this.theme);
+    this.applyTheme(this.theme);
+    this.playClickSound(750, 0.05);
+  }
+
+  applyTheme(theme) {
+    if (theme === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+      if (this.themeBtn) {
+        this.themeBtn.innerHTML = '🌙';
+        this.themeBtn.title = 'Mudar para Modo Claro (Tecla T)';
+      }
+    } else {
+      document.body.removeAttribute('data-theme');
+      if (this.themeBtn) {
+        this.themeBtn.innerHTML = '☀️';
+        this.themeBtn.title = 'Mudar para Modo Escuro (Tecla T)';
+      }
+    }
   }
 }
 
