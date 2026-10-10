@@ -1,0 +1,1335 @@
+/* ==========================================================================
+   TALA: ENTRE A TRADIÇÃO E A CIÊNCIA — APRESENTAÇÃO KEYNOTE DE ALTO IMPACTO
+   Design System Clínico Premium • Enfermeira Elsa • Angola
+   ========================================================================== */
+
+:root {
+  /* Cores Base & Superfícies */
+  --bg-dark: #070e14;
+  --bg-card: rgba(13, 27, 38, 0.75);
+  --bg-card-hover: rgba(19, 39, 56, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --border-glass: rgba(0, 229, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+
+  /* Acentos Clínicos */
+  --cyan-neon: #00e5ff;
+  --cyan-glow: rgba(0, 229, 255, 0.35);
+  --teal-accent: #00b4d8;
+  --emerald-live: #10b981;
+  --emerald-glow: rgba(16, 185, 129, 0.3);
+  --amber-warn: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.3);
+  --crimson-alert: #ff1744;
+  --crimson-glow: rgba(255, 23, 68, 0.45);
+
+  /* Tipografia & Contrastes */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Transições & Sombras */
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-keynote: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 35px var(--cyan-glow);
+}
+
+/* Reset Global & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  user-select: none;
+}
+
+/* Fundo Dinâmico com Malha e Brilho */
+.ambient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(0, 229, 255, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(7, 14, 20, 0.95) 0%, #04080c 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Master Presentation Container (Aspect Ratio 16:9 Adaptativo) */
+#app {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1560px;
+  aspect-ratio: 16 / 9;
+  max-height: 94vh;
+  background: rgba(10, 20, 29, 0.65);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  box-shadow: var(--shadow-keynote);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header da Apresentação */
+.deck-header {
+  height: 60px;
+  padding: 0 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(7, 14, 20, 0.4);
+  font-size: 0.85rem;
+}
+
+.deck-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cyan-neon);
+  box-shadow: 0 0 10px var(--cyan-neon);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.deck-brand span {
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan-neon);
+  font-family: var(--font-heading);
+}
+
+.deck-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--text-secondary);
+}
+
+.badge-speaker {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--cyan-neon);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Área Principal dos Diapositivos */
+.slides-viewport {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: calc(100% - 120px);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 45px 65px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px) scale(0.985);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Footer / Controlos */
+.deck-footer {
+  height: 60px;
+  padding: 0 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(7, 14, 20, 0.4);
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  max-width: 450px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 6.66%;
+  background: linear-gradient(90deg, var(--teal-accent), var(--cyan-neon));
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px var(--cyan-neon);
+}
+
+.slide-counter {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--cyan-neon);
+  font-size: 0.9rem;
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-ctrl {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  font-size: 0.95rem;
+}
+
+.btn-ctrl:hover {
+  background: rgba(0, 229, 255, 0.18);
+  border-color: var(--cyan-neon);
+  color: var(--cyan-neon);
+  transform: translateY(-2px);
+}
+
+.btn-ctrl.btn-primary {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: var(--cyan-neon);
+  color: var(--cyan-neon);
+}
+
+/* ==========================================================================
+   TIPOGRAFIA & HIERARQUIA DIDÁCTICA
+   ========================================================================== */
+
+.slide-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  width: fit-content;
+}
+
+.tag-cyan {
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--cyan-neon);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.tag-emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--emerald-live);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.tag-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--amber-warn);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.tag-red {
+  background: rgba(255, 23, 68, 0.15);
+  color: var(--crimson-alert);
+  border: 1px solid rgba(255, 23, 68, 0.4);
+}
+
+.slide-title {
+  font-family: var(--font-heading);
+  font-size: 2.3rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.slide-title span {
+  color: var(--cyan-neon);
+}
+
+.slide-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 900px;
+  margin-bottom: 25px;
+}
+
+/* ==========================================================================
+   LAYOUTS E CARDS DINÂMICOS
+   ========================================================================== */
+
+.grid-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 35px;
+  align-items: center;
+}
+
+.grid-split-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.grid-cards-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.grid-cards-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+/* Cards Premium */
+.card-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.card-panel:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(0, 229, 255, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card-panel.highlight-red {
+  border-color: rgba(255, 23, 68, 0.4);
+  background: rgba(35, 10, 15, 0.6);
+}
+
+.card-panel.highlight-emerald {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(8, 30, 22, 0.6);
+}
+
+.card-panel.highlight-amber {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(32, 22, 8, 0.6);
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Callout Gatilho / Frase de Impacto */
+.impact-callout {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(16, 185, 129, 0.08));
+  border-left: 4px solid var(--cyan-neon);
+  padding: 20px 26px;
+  border-radius: 0 16px 16px 0;
+  margin-bottom: 24px;
+}
+
+.impact-callout p {
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.impact-callout strong {
+  color: var(--cyan-neon);
+}
+
+/* Lista Didáctica com Ícones Customizados */
+.didactic-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.didactic-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.list-bullet {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--cyan-neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.list-bullet.bullet-red {
+  background: rgba(255, 23, 68, 0.2);
+  color: var(--crimson-alert);
+}
+
+.list-bullet.bullet-emerald {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--emerald-live);
+}
+
+/* ==========================================================================
+   EXIBIÇÃO DE CASOS CLÍNICOS REAIS (FOTOS REAIS DE ANGOLA)
+   ========================================================================== */
+
+.clinical-showcase {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  background: #000;
+  cursor: zoom-in;
+  group: 1;
+}
+
+.clinical-showcase img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.clinical-showcase:hover img {
+  transform: scale(1.04);
+  filter: brightness(1.05);
+}
+
+.clinical-overlay-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(7, 14, 20, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 23, 68, 0.5);
+  color: var(--crimson-alert);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clinical-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: linear-gradient(0deg, rgba(7, 14, 20, 0.95) 0%, rgba(7, 14, 20, 0.6) 70%, transparent 100%);
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  backdrop-filter: blur(4px);
+}
+
+.zoom-hint {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(7, 14, 20, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan-neon);
+  font-size: 0.8rem;
+  border: 1px solid var(--border-glass);
+}
+
+/* Grid Duplo para Comparação de Imagens Clínicas */
+.clinical-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.clinical-duo .clinical-showcase img {
+  height: 280px;
+}
+
+/* Galeria Tríplice da Evolução Clínica (Timeline de Cura) */
+.timeline-stages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.timeline-stage-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-stage-card .img-box {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.timeline-stage-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.timeline-stage-card:hover img {
+  transform: scale(1.05);
+}
+
+.timeline-stage-info {
+  padding: 18px;
+  flex: 1;
+}
+
+.timeline-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--cyan-neon);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+/* ===================================================
+   GALERIA DE EVIDÊNCIAS: CASO DIACONISA MARIA DOS SANTOS
+   =================================================== */
+.evidence-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.evidence-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.evidence-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--cyan-neon);
+  box-shadow: 0 8px 24px rgba(0, 229, 255, 0.15);
+}
+
+.evidence-card .img-box {
+  position: relative;
+  height: 140px;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: #000;
+}
+
+.evidence-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.evidence-card:hover img {
+  transform: scale(1.08);
+}
+
+.evidence-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(7, 14, 20, 0.88);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--cyan-neon);
+  color: var(--cyan-neon);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.evidence-info {
+  padding: 10px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.evidence-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.evidence-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.timeline-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.timeline-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   TABELA COMPARATIVA MÉDICA
+   ========================================================================== */
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-card);
+}
+
+.clinical-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.clinical-table th {
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--cyan-neon);
+  padding: 14px 18px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.clinical-table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  vertical-align: middle;
+}
+
+.clinical-table tr:hover td {
+  background: rgba(0, 229, 255, 0.04);
+}
+
+.tag-disease {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.tag-disease.erisipela {
+  background: rgba(255, 23, 68, 0.18);
+  color: #ff6b81;
+}
+
+.tag-disease.vascular {
+  background: rgba(0, 180, 216, 0.18);
+  color: #48cae4;
+}
+
+.tag-disease.diabetico {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbc531;
+}
+
+.tag-disease.abcesso {
+  background: rgba(156, 136, 255, 0.18);
+  color: #c7ecee;
+}
+
+/* ==========================================================================
+   INTERACTIVOS: QUIZ / CASO DIDÁCTICO
+   ========================================================================== */
+
+.case-challenge-box {
+  background: rgba(0, 229, 255, 0.05);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.interactive-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.acc-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.acc-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.acc-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.acc-btn {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--cyan-neon);
+  border: none;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.acc-body {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.acc-item.open .acc-body {
+  padding: 16px 20px;
+  max-height: 200px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+}
+
+.acc-item.open {
+  border-color: var(--cyan-neon);
+}
+
+/* ==========================================================================
+   MODAIS: NOTAS DA ENFERMEIRA ELSA & LIGHTBOX CLÍNICO HD
+   ========================================================================== */
+
+/* Lightbox para Imagens Clínicas */
+#lightbox-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+}
+
+#lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#lightbox-img {
+  max-width: 85vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--border-glass);
+}
+
+#lightbox-caption {
+  margin-top: 15px;
+  color: #ffffff;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 700px;
+  background: rgba(7, 14, 20, 0.8);
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -45px;
+  right: 0;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+/* Modal Visão Geral de Diapositivos (Grid Navigator) */
+#grid-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 9, 14, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 950;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+}
+
+#grid-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.grid-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.grid-modal-header h2 {
+  font-family: var(--font-heading);
+  color: var(--cyan-neon);
+}
+
+.grid-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  overflow-y: auto;
+  padding: 10px;
+  flex: 1;
+}
+
+.thumb-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+}
+
+.thumb-card:hover, .thumb-card.current {
+  border-color: var(--cyan-neon);
+  background: rgba(0, 229, 255, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.thumb-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cyan-neon);
+}
+
+.thumb-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   ANIMAÇÕES & MICRO-DETALHES
+   ========================================================================== */
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+@keyframes pulse-alert {
+  0%, 100% { border-color: rgba(255, 23, 68, 0.5); box-shadow: 0 0 15px rgba(255, 23, 68, 0.2); }
+  50% { border-color: rgba(255, 23, 68, 0.9); box-shadow: 0 0 35px rgba(255, 23, 68, 0.5); }
+}
+
+.pulse-emergency {
+  animation: pulse-alert 2s infinite ease-in-out;
+}
+
+/* Atalhos Flutuantes */
+.keyboard-shortcuts-pill {
+  position: absolute;
+  top: 14px;
+  right: 25px;
+  display: flex;
+  gap: 6px;
+  opacity: 0.6;
+  font-size: 0.72rem;
+}
+
+.kbd-key {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: monospace;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE & AJUSTES MOBILE (TELEMOVEL & TABLET)
+   ========================================================================== */
+
+/* Rolagem elegante nos diapositivos */
+.slide::-webkit-scrollbar {
+  width: 4px;
+}
+.slide::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 255, 0.3);
+  border-radius: 4px;
+}
+.slide::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Telas Médias / Tablets (Landscape ou Portáteis pequenos) */
+@media (max-width: 1200px) {
+  .slide { padding: 30px 40px; }
+  .slide-title { font-size: 1.85rem; }
+  .grid-split, .grid-split-equal { grid-template-columns: 1fr; gap: 20px; }
+  .clinical-showcase img { height: 260px; }
+}
+
+/* Telemóveis e Ecrãs Verticais (< 900px) */
+@media (max-width: 900px) {
+  body {
+    overflow: hidden;
+    height: 100dvh;
+    width: 100vw;
+  }
+
+  #app {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100dvh;
+  }
+
+  .stage-wrapper {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    aspect-ratio: unset; /* Remove proporção 16:9 fixa no telemóvel */
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    background: rgba(7, 14, 20, 0.95);
+  }
+
+  /* Cabeçalho Compacto */
+  .deck-header {
+    height: 48px;
+    padding: 0 14px;
+    flex-shrink: 0;
+  }
+
+  .deck-brand span {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .deck-meta {
+    gap: 10px;
+  }
+
+  .badge-speaker {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+  }
+
+  .keyboard-shortcuts-pill {
+    display: none !important;
+  }
+
+  /* Viewport e Slides no Telemóvel */
+  .slides-viewport {
+    height: calc(100dvh - 104px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 14px 14px 20px 14px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Permite rolar do topo sem cortar texto */
+    gap: 12px;
+  }
+
+  /* Tipografia Mobile */
+  .slide-tag {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    margin-bottom: 4px;
+    gap: 5px;
+  }
+
+  .slide-title {
+    font-size: 1.3rem;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+
+  .slide-subtitle {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  /* Grids Transformam-se em Coluna Única */
+  .grid-split,
+  .grid-split-equal,
+  .grid-cards-3,
+  .grid-cards-4,
+  .clinical-duo,
+  .timeline-stages {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Cards Adaptados */
+  .card-panel {
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+
+  .card-icon {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-size: 0.98rem;
+    margin-bottom: 4px;
+  }
+
+  .card-desc {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  /* Callout de Impacto */
+  .impact-callout {
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    border-left-width: 3px;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .impact-callout p {
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  /* Listas Didácticas */
+  .didactic-list {
+    gap: 8px;
+  }
+
+  .didactic-list li {
+    font-size: 0.82rem;
+    gap: 10px;
+    line-height: 1.35;
+  }
+
+  .list-bullet {
+    width: 20px;
+    height: 20px;
+    font-size: 0.68rem;
+  }
+
+  /* Casos Clínicos e Fotografias */
+  .clinical-showcase {
+    border-radius: 12px;
+  }
+
+  .clinical-showcase img {
+    height: 200px !important;
+    max-height: 220px !important;
+  }
+
+  .clinical-caption {
+    padding: 10px 12px;
+    font-size: 0.74rem;
+  }
+
+  .clinical-overlay-badge {
+    top: 8px;
+    left: 8px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+  }
+
+  .timeline-stage-card .img-box {
+    height: 160px;
+  }
+
+  .timeline-stage-info {
+    padding: 12px;
+  }
+
+  .timeline-title {
+    font-size: 0.95rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.78rem;
+  }
+
+  /* Tabelas Clínicas */
+  .clinical-table th, .clinical-table td {
+    padding: 8px 10px;
+    font-size: 0.74rem;
+  }
+
+  /* Rodapé Ergonómico com Botões Grandes para Polegar */
+  .deck-footer {
+    height: 56px;
+    padding: 0 12px;
+    flex-shrink: 0;
+    gap: 10px;
+  }
+
+  .progress-container {
+    gap: 8px;
+  }
+
+  .progress-track {
+    height: 4px;
+  }
+
+  .slide-counter {
+    font-size: 0.8rem;
+    min-width: 46px;
+  }
+
+  .controls-group {
+    gap: 6px;
+  }
+
+  .btn-ctrl {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+
+  #btn-fullscreen {
+    display: none; /* Não necessário no mobile */
+  }
+
+  /* Modais no Telemóvel */
+  #lightbox-modal {
+    padding: 10px;
+  }
+
+  .lightbox-content {
+    max-width: 98vw;
+    max-height: 94vh;
+  }
+
+  #lightbox-img {
+    max-width: 96vw;
+    max-height: 65vh;
+  }
+
+  #lightbox-caption {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    max-width: 92vw;
+  }
+
+  .lightbox-close {
+    top: -36px;
+    right: 0;
+    font-size: 1.8rem;
+  }
+
+  #grid-modal {
+    padding: 16px 12px;
+  }
+
+  .grid-thumbnails {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 4px;
+  }
+
+  .thumb-card {
+    padding: 10px;
+    min-height: 75px;
+  }
+
+  .thumb-title {
+    font-size: 0.74rem;
+  }
+}
+
+/* Telas Muito Estreitas (< 380px) */
+@media (max-width: 380px) {
+  .slide-title { font-size: 1.18rem; }
+  .badge-speaker { display: none; }
+  .btn-ctrl { width: 36px; height: 36px; }
+  .grid-thumbnails { grid-template-columns: 1fr; }
+}
+
